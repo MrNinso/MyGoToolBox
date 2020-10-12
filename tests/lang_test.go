@@ -8,79 +8,75 @@ import (
 	"testing"
 )
 
-type testStruct struct {
-	T *testing.T
-}
-
 // crypto tests
-func (T *testStruct) TestCryptoMD5() {
-	assert.Equal(T.T, "bbe9f2c0b66df3c89869a4be4313000f", crypto.ToMD5Hash("wtf Man"))
+func TestCryptoMD5(t *testing.T) {
+	assert.Equal(t, "6a35e5064b0084772b24e448f7d9d674", crypto.ToMD5Hash("wtf Man"))
 }
 
-func (T *testStruct) TestCryptoSHA256() {
-	assert.Equal(T.T,
-		"32e8e4b2a16368d2750e33393ff897dd5d28cd74ba6fe8827e7c4e658a8f543a",
+func TestCryptoSHA256(t *testing.T) {
+	assert.Equal(t,
+		"d943277785598d1eb21e1ccfae040f4aec98f8e74db3fffa4c408d5934e5c25d",
 		crypto.ToSHA256Hash("wtf Man"),
 	)
 }
 
 // env test
-func (T *testStruct) SetAnGetValue() {
+func TestSetAnGetValue(t *testing.T) {
 	_, err := env.SetEnv("TEST", "AAAAAAAAAAAAAAAAAAAAa")
 
-	assert.Nil(T.T, err)
+	assert.Nil(t, err)
 
 	h, err := env.SetEnv("TEST", "AAAAAAAAAAAAAAAAAAAAa")
 
-	assert.Nil(T.T, err)
-	assert.True(T.T, h)
+	assert.Nil(t, err)
+	assert.True(t, h)
 
-	assert.Equal(T.T, "AAAAAAAAAAAAAAAAAAAAa", env.GetEnv("TEST", ""))
-	assert.Equal(T.T, "B", env.GetEnv("TEST2", "B"))
+	assert.Equal(t, "AAAAAAAAAAAAAAAAAAAAa", env.GetEnv("TEST", ""))
+	assert.Equal(t, "B", env.GetEnv("TEST2", "B"))
 
 }
 
 // Ifs Tests
-func (T *testStruct) IfReturn() {
-	assert.True(T.T, ifs.IfReturn(true, true, false).(bool))
-	assert.False(T.T, ifs.IfReturn(false, true, false).(bool))
+func TestIfReturn(t *testing.T) {
+	assert.True(t, ifs.IfReturn(true, true, false).(bool))
+	assert.False(t, ifs.IfReturn(false, true, false).(bool))
 }
 
-func (T *testStruct) IfNil() {
-	assert.Equal(T.T, "1", ifs.IfNil("1", "2").(string))
-	assert.Equal(T.T, "2", ifs.IfNil(nil, "2").(string))
+func TestIfNil(t *testing.T) {
+	assert.Equal(t, "1", ifs.IfNil("1", "2").(string))
+	assert.Equal(t, "2", ifs.IfNil(nil, "2").(string))
 }
 
-func (T testStruct) IfStringEmpty() {
-	assert.Equal(T.T, "1", ifs.IfStringEmpty("1", "2"))
-	assert.Equal(T.T, "2", ifs.IfStringEmpty("", "2"))
+func TestIfStringEmpty(t *testing.T) {
+	assert.Equal(t, "1", ifs.IfStringEmpty("1", "2"))
+	assert.Equal(t, "2", ifs.IfStringEmpty("", "2"))
 }
 
-func (T *testStruct) IfAnyNil() {
-	assert.True(T.T, ifs.IfAnyNil("", "", "", nil, ""))
-	assert.False(T.T, ifs.IfAnyNil("", "", "", "", ""))
+func TestIfAnyNil(t *testing.T) {
+	assert.True(t, ifs.IfAnyNil("", "", "", nil, ""))
+	assert.False(t, ifs.IfAnyNil("", "", "", "", ""))
 }
 
-func (T *testStruct) IfAnyStringEmpty() {
-	assert.True(T.T, ifs.IfAnyStringEmpty("1", "2", "", "4", "5"))
-	assert.False(T.T, ifs.IfAnyStringEmpty("1", "2", "3", "4", "5"))
+func TestIfAnyStringEmpty(t *testing.T) {
+	assert.True(t, ifs.IfAnyStringEmpty("1", "2", "", "4", "5"))
+	assert.False(t, ifs.IfAnyStringEmpty("1", "2", "3", "4", "5"))
 }
 
-func (T *testStruct) IfStringArrayItemContains() {
+func TestIfStringArrayItemContains(t *testing.T) {
 	strs := []string{"aaa1aa", "bb", "C", "d"}
 
-	t, p := ifs.IfStringArrayItemContains("1", strs)
+	t1, p := ifs.IfStringArrayItemContains("1", strs)
 
-	assert.True(T.T, t)
-	assert.Equal(T.T, 0, p)
+	assert.True(t, t1)
+	assert.Equal(t, 0, p)
 
-	t, p = ifs.IfStringArrayItemContains("bb", strs)
+	t1, p = ifs.IfStringArrayItemContains("bb", strs)
 
-	assert.True(T.T, t)
-	assert.Equal(T.T, 1, p)
+	assert.True(t, t1)
+	assert.Equal(t, 1, p)
 
-	t, p = ifs.IfStringArrayItemContains("e", strs)
+	t1, p = ifs.IfStringArrayItemContains("e", strs)
 
-	assert.False(T.T, t)
-	assert.Equal(T.T, -1, p)
+	assert.False(t, t1)
+	assert.Equal(t, -1, p)
 }
