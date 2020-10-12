@@ -2,8 +2,8 @@ package ifs
 
 import "strings"
 
-func IfReturn(contion bool, t, f interface{}) interface{} {
-	if contion {
+func IfReturn(condition bool, t, f interface{}) interface{} {
+	if condition {
 		return t
 	}
 	return f
@@ -37,9 +37,9 @@ func IfAnyStringEmpty(f ...string) bool {
 	return false
 }
 
-func IfStringArrayItemContais(serach string, array []string) (contais bool, pos int) {
+func IfStringArrayItemContains(search string, array []string) (contains bool, pos int) {
 	for i, c := range array {
-		if strings.Contains(c, serach) {
+		if strings.Contains(c, search) {
 			return true, i
 		}
 	}
