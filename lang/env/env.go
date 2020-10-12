@@ -15,11 +15,10 @@ func SetEnv(key, value string) (hasUpdated bool, err error) {
 	return exists, os.Setenv(key, value)
 }
 
-func GetIntFromEnv(key string, defaulValue string) (int, error) {
+func GetIntFromEnv(key string, defaulValue int) int {
 	v := GetEnv(key, "")
 
 	i, err := strconv.Atoi(v)
 
-	return IfReturn(err == nil, i, defaulValue).(int), err
-
+	return IfReturn(err == nil, i, defaulValue).(int)
 }
