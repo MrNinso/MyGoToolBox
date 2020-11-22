@@ -1,13 +1,17 @@
 package env
 
 import (
-	. "github.com/MrNinso/MyGoToolBox/lang/ifs"
 	"os"
 	"strconv"
 )
 
 func GetEnv(key, defaultValue string) string {
-	return IfStringEmpty(os.Getenv(key), defaultValue)
+	s := os.Getenv(key)
+	if s == "" {
+		return defaultValue
+	} else {
+		return s
+	}
 }
 
 func SetEnv(key, value string) (hasUpdated bool, err error) {
@@ -20,5 +24,9 @@ func GetIntFromEnv(key string, defaulValue int) int {
 
 	i, err := strconv.Atoi(v)
 
-	return IfReturn(err == nil, i, defaulValue).(int)
+	if err == nil {
+		return i
+	} else {
+		return defaulValue
+	}
 }
